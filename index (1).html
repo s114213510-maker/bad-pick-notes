@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>踩雷備忘錄</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2d3a4f;--paper:#f1f5f9;--dot:#b7c7d8;--card:#fbfdff;--mark:#2f5d9e;--sage:#7f9a8a}
+*{box-sizing:border-box}
+html{font-family:"LXGW WenKai TC","Noto Serif TC","PingFang TC","Microsoft JhengHei",serif}
+body,input,select,button,textarea{font-family:inherit;font-size:16px;color:var(--ink)}
+body{margin:0;background-color:var(--paper);background-image:radial-gradient(var(--dot) 1.1px,transparent 1.4px);background-size:22px 22px;min-height:100vh;line-height:1.5}
+.wrap{max-width:1040px;margin:0 auto;padding:30px 16px 64px}
+.cover{position:relative;display:inline-block;background:var(--card);padding:16px 34px 14px;margin:14px 0 6px 6px;transform:rotate(-1.2deg);border:1px solid rgba(45,58,79,.35);box-shadow:2px 3px 0 rgba(45,58,79,.12)}
+.cover::before{content:"";position:absolute;top:-13px;left:18px;width:96px;height:24px;background:repeating-linear-gradient(45deg,rgba(143,176,214,.75) 0 6px,rgba(255,255,255,.6) 6px 12px);transform:rotate(-4deg)}
+.cover::after{content:"";position:absolute;right:-16px;bottom:-12px;width:70px;height:22px;background:rgba(188,211,234,.8);transform:rotate(-8deg)}
+h1{margin:0;font-size:clamp(30px,6vw,46px);font-weight:700;letter-spacing:.14em}
+.date{position:absolute;top:-18px;right:-20px;background:#fff;border:1px dashed var(--ink);border-radius:50%;width:74px;height:74px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13px;line-height:1.2;transform:rotate(9deg)}
+.sub{margin:16px 0 20px 6px;font-weight:300}
+.sub::before{content:"✿ "}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+input[type=search],select{padding:8px 12px;border:1.5px solid var(--ink);border-radius:999px;background:var(--card)}
+input[type=search]{flex:1 1 220px;min-width:0}
+button{cursor:pointer;border:1.5px solid var(--ink);background:var(--card);border-radius:999px;padding:8px 16px}
+button:hover{background:#fff}
+button:active{transform:translateY(1px)}
+button.main{background:var(--mark);border-color:var(--mark);color:#fff}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #3f78c4;outline-offset:2px}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 22px}
+.stat{background:rgba(251,253,255,.85);border:1px dashed var(--ink);padding:4px 14px;border-radius:4px;font-size:15px}
+.wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:30px 24px;padding-top:14px}
+.note{position:relative;padding:28px 20px 18px;min-height:220px;cursor:pointer;border:1px solid rgba(45,58,79,.3);border-radius:3px;box-shadow:2px 4px 0 rgba(45,58,79,.13);transition:transform .15s}
+.note::after{content:"";position:absolute;inset:6px;border:1px dashed rgba(45,58,79,.28);pointer-events:none}
+.note:nth-child(3n+1){transform:rotate(-1.4deg)}.note:nth-child(3n+2){transform:rotate(1deg)}.note:nth-child(3n){transform:rotate(-.4deg)}
+.note:hover,.note:focus-visible{transform:rotate(0) scale(1.02);z-index:2}
+.note:focus-visible{outline:3px solid #3f78c4;outline-offset:3px}
+.note::before{content:"";position:absolute;top:-12px;left:50%;width:88px;height:24px;margin-left:-44px;transform:rotate(-3deg)}
+.note:nth-child(3n+1)::before{background:repeating-linear-gradient(45deg,rgba(143,176,214,.75) 0 6px,rgba(255,255,255,.6) 6px 12px)}
+.note:nth-child(3n+2)::before{background:#bcd3ea radial-gradient(#fff 1.5px,transparent 2px) 0 0/10px 10px;opacity:.9}
+.note:nth-child(3n)::before{background:rgba(170,200,225,.75)}
+.lv0{background:#e6f0f8}.lv1{background:#c9ddef}.lv2{background:#9fbfe0}
+.note h2{margin:0 0 6px;font-size:21px;font-weight:700;line-height:1.3;word-break:break-word}
+.meter{height:10px;border:1.5px solid var(--ink);background:rgba(255,255,255,.7);border-radius:6px;overflow:hidden;margin:6px 0 8px}
+.meter i{display:block;height:100%;background:repeating-linear-gradient(90deg,var(--mark) 0 6px,#5b86c2 6px 8px)}
+.lei{font-size:15px;font-weight:700}
+.badge{display:inline-block;margin:3px 2px 3px 0;padding:0 10px;border:1px solid var(--ink);border-radius:999px;background:rgba(255,255,255,.75);font-size:14px}
+.best{font-size:15px;margin:8px 0 0}
+.chips span{display:inline-block;margin:3px 3px 0 0;padding:0 8px;border-radius:3px;background:rgba(255,255,255,.75);border:1px solid rgba(45,58,79,.5);font-size:14px}
+.scores{font-size:14px;margin:10px 0}
+.back{display:none}.flipped .front{display:none}.flipped .back{display:block}
+.flipped{animation:peel .3s}
+@keyframes peel{from{transform:rotateY(80deg)}to{transform:rotateY(0)}}
+.acts{display:flex;gap:8px;margin-top:12px}.acts button{padding:2px 12px;font-size:14px}
+.stamp{position:absolute;top:34px;right:12px;border:2px solid var(--mark);color:var(--mark);padding:0 8px;font-weight:700;transform:rotate(12deg);background:rgba(251,253,255,.6);border-radius:4px;letter-spacing:.1em;z-index:1}
+.demo{position:absolute;bottom:10px;right:14px;font-size:12px;opacity:.7}
+.rank{position:absolute;top:-6px;left:8px;background:var(--ink);color:var(--card);padding:0 10px;border-radius:3px;font-size:14px;z-index:1}
+.picked{animation:pick .8s 2;outline:3px solid var(--mark);outline-offset:4px}
+@keyframes pick{50%{transform:scale(1.06) rotate(2deg)}}
+.empty{grid-column:1/-1;text-align:center;padding:30px;background:var(--card);border:1px dashed var(--ink)}
+.modal{position:fixed;inset:0;background:rgba(45,58,79,.5);display:none;align-items:center;justify-content:center;padding:14px;z-index:10}
+.modal.on{display:flex}
+form{position:relative;background:var(--card);width:min(480px,100%);max-height:92vh;overflow:auto;padding:26px 22px 20px;border:1px solid var(--ink);box-shadow:4px 5px 0 rgba(45,58,79,.25);transform:rotate(-.5deg)}
+form h3{margin:0 0 8px;font-size:22px;font-weight:700}
+label{display:block;margin:10px 0 3px;font-size:15px}
+form input[type=text],form select,textarea{width:100%;padding:7px 10px;border:1.5px solid var(--ink);border-radius:6px;background:#fff}
+.tags{display:flex;flex-wrap:wrap;gap:6px}.tags label{margin:0;background:#fff;border:1px solid var(--ink);border-radius:999px;padding:1px 10px;cursor:pointer}
+.tags input:checked+span{font-weight:700;color:var(--mark)}
+input[type=range]{width:100%;accent-color:var(--mark)}
+.hint{font-size:13px;opacity:.75}
+.foot{margin-top:44px;font-size:14px;text-align:center}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--card);padding:10px 18px;border-radius:999px;display:none;z-index:20;max-width:90vw}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="cover"><h1>踩雷備忘錄</h1><div class="date" id="dt"></div></div>
+  <p class="sub">吃過就忘？那就貼起來。下次朋友說「去這家吧」，先查一下。</p>
+
+  <div class="bar">
+    <input type="search" id="q" placeholder="雷店查詢：輸入店名" aria-label="雷店查詢">
+    <select id="fType" aria-label="類型"><option value="">全部類型</option><option>咖啡廳</option><option>早午餐</option></select>
+    <select id="fShape" aria-label="店型"><option value="">全部店型</option></select>
+    <select id="fTag" aria-label="雷點"><option value="">全部雷點</option></select>
+    <select id="fOpen" aria-label="營業狀態"><option value="">營業＋歇業</option><option value="open">營業中</option><option value="closed">已歇業</option></select>
+    <select id="sort" aria-label="排序">
+      <option value="lei">雷度：高到低（排行榜）</option><option value="photo">好拍度：高到低</option>
+      <option value="taste">好吃度：高到低</option><option value="value">價格感：值得到不值</option><option value="new">最新新增</option>
+    </select>
+  </div>
+  <div class="bar">
+    <button class="main" id="add">＋ 新增一張</button>
+    <button id="rand">🎲 今天想踩雷嗎？</button>
+    <button id="reset">恢復示範資料</button>
+  </div>
+  <div class="stats" id="stats"></div>
+  <div class="wall" id="wall"></div>
+  <p class="foot">示範資料與評論皆為個人主觀經驗，僅供參考。資料只存在你的瀏覽器。</p>
+</div>
+
+<div class="modal" id="modal">
+  <form id="form">
+    <h3 id="ftitle">新增一張</h3>
+    <input type="hidden" id="id">
+    <label for="name">店名（只有這格必填）</label>
+    <input type="text" id="name" maxlength="40">
+    <label for="type">類型</label>
+    <select id="type"><option>咖啡廳</option><option>早午餐</option></select>
+    <label>雷點（可複選）</label>
+    <div class="tags" id="tagBox"></div>
+    <label for="photo">好拍度：<b id="photoV">3</b>／5</label>
+    <input type="range" id="photo" min="1" max="5" value="3">
+    <label for="taste">好吃度：<b id="tasteV">3</b>／5</label>
+    <input type="range" id="taste" min="1" max="5" value="3">
+    <label for="value">價格感：<b id="valueV">3</b>／5 <span class="hint">（5 = 很值得，1 = 超不值）</span></label>
+    <input type="range" id="value" min="1" max="5" value="3">
+    <label for="best">唯一值得點</label>
+    <input type="text" id="best" maxlength="40" placeholder="沒有就留空">
+    <label for="comment">個人碎念</label>
+    <textarea id="comment" rows="3" maxlength="200"></textarea>
+    <label><input type="checkbox" id="closed"> 已歇業</label>
+    <div class="acts"><button type="submit" class="main">貼上</button><button type="button" id="cancel">取消</button></div>
+  </form>
+</div>
+<div id="toast" role="status"></div>
+
+<script>
+const KEY="bad-pick-notes-v1";
+const TAGS={price:"💸 價格不合理",oily:"🛢️ 太油膩",overrated:"🏆 過譽",drink:"☕ 飲品不穩定或太淡",tea:"🍵 紅茶難喝",dessert:"🍰 甜點普通",photoonly:"📸 只有擺盤好看",service:"🙄 服務差",env:"🦟 環境不佳"};
+const SHAPES={wang:"📸 網美雷",pure:"🫠 純雷",gem:"💎 遺珠",safe:"✅ 安全牌",meh:"😐 普通"};
+const DEMO=[
+ {name:"Burnt.",type:"早午餐",tags:["price","oily"],photo:4,taste:2,value:2,best:"西西里氣泡咖啡",comment:"六個人點五道菜，沒一道好吃，還很貴。",closed:true},
+ {name:"細水焙煎所",type:"咖啡廳",tags:["overrated","drink"],photo:4,taste:2,value:2,best:"苦焦糖布丁",comment:"完全過譽，飲品看當天沖泡手法，蛋糕別家也吃得到。",closed:false},
+ {name:"淺川",type:"咖啡廳",tags:["env","service","drink"],photo:5,taste:2,value:2,best:"芭樂美式",comment:"蚊子超級多，老闆態度超差，手沖淡得像水。",closed:false},
+ {name:"Overture 序曲",type:"咖啡廳",tags:["price","dessert"],photo:5,taste:2,value:2,best:"開心果千層",comment:"千層很乾，水果蛋糕的水果超薄，馬卡龍超難吃。",closed:false},
+ {name:"上山採覓 審計新村店",type:"早午餐",tags:["photoonly","env","tea"],photo:4,taste:1,value:2,best:"",comment:"漢堡切面超差，油煙味超重，連紅茶都難喝，擺盤好看而已。",closed:false}
+].map((d,i)=>({...d,id:"demo"+i,demo:true,t:i}));
+
+let items=load();
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(Array.isArray(s))return s}catch(e){}return DEMO.map(d=>({...d,tags:[...d.tags]}))}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(items))}catch(e){toast("瀏覽器不允許儲存，重新整理後資料會消失")}}
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function lei(d){const v=((5-d.taste)/4)*50+((5-d.value)/4)*30+Math.min(d.tags.length,5)*4;return Math.round(Math.max(0,Math.min(100,v)))}
+function shape(d){
+  if(d.photo>=4&&d.taste<=2&&d.value<=2)return"wang";
+  if(d.taste<=2&&d.photo<=2)return"pure";
+  if(d.taste>=4&&d.photo<=2)return"gem";
+  if(d.taste>=4&&d.photo>=4&&d.value>=3)return"safe";
+  return"meh";
+}
+const level=n=>n>=70?2:n>=40?1:0;
+
+function filtered(){
+  const q=$("q").value.trim().toLowerCase(),t=$("fType").value,s=$("fShape").value,g=$("fTag").value,o=$("fOpen").value,so=$("sort").value;
+  let l=items.filter(d=>(!q||d.name.toLowerCase().includes(q))&&(!t||d.type===t)&&(!s||shape(d)===s)&&(!g||d.tags.includes(g))&&(!o||(o==="closed")===!!d.closed));
+  const by={lei:(a,b)=>lei(b)-lei(a),photo:(a,b)=>b.photo-a.photo,taste:(a,b)=>b.taste-a.taste,value:(a,b)=>b.value-a.value,new:(a,b)=>(b.t||0)-(a.t||0)};
+  return l.sort(by[so]);
+}
+
+function render(){
+  const l=filtered(),w=$("wall");
+  if(!l.length){
+    const q=$("q").value.trim();
+    w.innerHTML=`<div class="empty">${items.length&&q?`查無「${esc(q)}」的紀錄，看來沒踩過（或還沒記）。`:"沒有符合的便利貼。"}<br><br><button class="main" id="addFromQ">＋ 新增這家店</button></div>`;
+    $("addFromQ").onclick=()=>openForm(null,q);
+  }else{
+    w.innerHTML=l.map((d,i)=>{
+      const n=lei(d),sh=SHAPES[shape(d)];
+      const rank=$("sort").value==="lei"&&i===0&&l.length>1?`<div class="rank">🏆 雷王</div>`:"";
+      return `<article class="note lv${level(n)}" data-id="${d.id}" tabindex="0" aria-label="${esc(d.name)}，雷度 ${n}%，點擊翻面">
+        ${rank}${d.closed?'<div class="stamp">已歇業</div>':""}
+        <div class="front">
+          <h2>${esc(d.name)}</h2>
+          <div class="lei">雷度 ${n}%</div><div class="meter"><i style="width:${n}%"></i></div>
+          <span class="badge">${sh}</span> <span class="badge">${esc(d.type)}</span>
+          <p class="best">${d.best?"👍 唯一值得點："+esc(d.best):"👍 唯一值得點：沒有"}</p>
+          ${d.demo?'<span class="demo">示範資料</span>':""}
+        </div>
+        <div class="back">
+          <h2>${esc(d.name)}</h2>
+          <div class="chips">${d.tags.length?d.tags.map(k=>`<span>${TAGS[k]}</span>`).join(""):"<span>沒有勾雷點</span>"}</div>
+          <div class="scores">📸 好拍 ${d.photo}／5　😋 好吃 ${d.taste}／5　💰 價格感 ${d.value}／5</div>
+          <p>${esc(d.comment)||"（沒有碎念）"}</p>
+          <div class="acts"><button data-act="edit">編輯</button><button data-act="del">撕掉</button></div>
+        </div>
+      </article>`}).join("");
+  }
+  stats();
+}
+function stats(){
+  const n=items.length,avg=n?Math.round(items.reduce((a,d)=>a+lei(d),0)/n):0,wang=items.filter(d=>shape(d)==="wang").length;
+  $("stats").innerHTML=`<div class="stat">📒 共 ${n} 張</div><div class="stat">🌡️ 平均雷度 ${avg}%</div><div class="stat">📸 網美雷 ${wang}／${n}${n&&wang===n?" 😂":""}</div>`;
+}
+
+$("wall").addEventListener("click",e=>{
+  const card=e.target.closest(".note");if(!card)return;
+  const act=e.target.dataset.act,id=card.dataset.id;
+  if(act==="edit"){openForm(items.find(d=>d.id===id));return}
+  if(act==="del"){if(confirm("確定撕掉這張便利貼？")){items=items.filter(d=>d.id!==id);save();render();toast("已撕掉")}return}
+  card.classList.remove("picked");card.classList.toggle("flipped");
+});
+$("wall").addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.classList.contains("note")){e.preventDefault();e.target.classList.toggle("flipped")}});
+
+["q","fType","fShape","fTag","fOpen","sort"].forEach(id=>$(id).addEventListener("input",render));
+$("fShape").innerHTML+=Object.entries(SHAPES).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
+$("fTag").innerHTML+=Object.entries(TAGS).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
+$("tagBox").innerHTML=Object.entries(TAGS).map(([k,v])=>`<label><input type="checkbox" value="${k}" hidden><span>${v}</span></label>`).join("");
+$("tagBox").addEventListener("click",e=>{const l=e.target.closest("label");if(l)e.preventDefault(),l.firstChild.checked=!l.firstChild.checked,l.firstChild.dispatchEvent(new Event("change"))});
+["photo","taste","value"].forEach(k=>$(k).addEventListener("input",()=>$(k+"V").textContent=$(k).value));
+
+function openForm(d,name){
+  $("ftitle").textContent=d?"編輯這張":"新增一張";
+  $("id").value=d?d.id:"";
+  $("name").value=d?d.name:(name||"");
+  $("type").value=d?d.type:"咖啡廳";
+  document.querySelectorAll("#tagBox input").forEach(c=>c.checked=!!d&&d.tags.includes(c.value));
+  ["photo","taste","value"].forEach(k=>{$(k).value=d?d[k]:3;$(k+"V").textContent=$(k).value});
+  $("best").value=d?d.best:"";$("comment").value=d?d.comment:"";$("closed").checked=!!d&&!!d.closed;
+  $("modal").classList.add("on");$("name").focus();
+}
+function closeForm(){$("modal").classList.remove("on")}
+$("add").onclick=()=>openForm(null);
+$("cancel").onclick=closeForm;
+$("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeForm()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeForm()});
+$("form").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=$("name").value.trim();
+  if(!name){toast("至少要寫店名喔");$("name").focus();return}
+  const rec={name,type:$("type").value,tags:[...document.querySelectorAll("#tagBox input:checked")].map(c=>c.value),
+    photo:+$("photo").value,taste:+$("taste").value,value:+$("value").value,best:$("best").value.trim(),comment:$("comment").value.trim(),closed:$("closed").checked};
+  const id=$("id").value;
+  if(id){items=items.map(d=>d.id===id?{...d,...rec}:d);toast("已更新")}
+  else{items.push({...rec,id:"u"+Date.now(),demo:false,t:Date.now()});toast("已貼上新的便利貼")}
+  save();closeForm();render();
+});
+
+$("rand").onclick=()=>{
+  const l=filtered();if(!l.length){toast("目前沒有可抽的店");return}
+  const d=l[Math.floor(Math.random()*l.length)];
+  const el=document.querySelector(`.note[data-id="${d.id}"]`);
+  document.querySelectorAll(".picked").forEach(x=>x.classList.remove("picked"));
+  el.classList.add("picked");el.scrollIntoView({behavior:"smooth",block:"center"});
+  toast(`抽到「${d.name}」，雷度 ${lei(d)}%`);
+};
+$("reset").onclick=()=>{if(confirm("會用 5 筆示範資料覆蓋目前所有紀錄，確定嗎？")){items=DEMO.map(d=>({...d,tags:[...d.tags]}));save();render();toast("已恢復示範資料")}};
+
+let tt;function toast(m){const t=$("toast");t.textContent=m;t.style.display="block";clearTimeout(tt);tt=setTimeout(()=>t.style.display="none",2600)}
+render();
+{const n=new Date();$("dt").innerHTML=n.getFullYear()+"<br>"+String(n.getMonth()+1).padStart(2,"0")+"."+String(n.getDate()).padStart(2,"0")}
+</script>
+</body>
+</html>
